@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 
-
 // Schema for the recipe objects
 const recipeSchema = new mongoose.Schema({
   name: {

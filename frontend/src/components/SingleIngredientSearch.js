@@ -1,16 +1,14 @@
 import React from 'react'
+import StyledSearchBar from './StyledSearchBar'
 
 export default function SingleIngredientSearch(props) {
-  const { handleSubmit } = props
+  const { handleSingleIngredientChange, handleSingleIngredientSearch } = props
 
   return (
     <>
       <p>single ingredients search</p>
-      <form onSubmit={handleSubmit}>
-        <>
-          <input type="text" placeholder="Single Ingredient Search" />
-          <button type="submit" value="Submit" >Search</button>
-        </>
+      <form onSubmit={ handleSingleIngredientSearch }>
+        <StyledSearchBar onChange={ handleSingleIngredientChange } height='2rem' width='100%' type="search" placeholder="Search for recipes using a single ingredient" />
       </form>
     </>
   )

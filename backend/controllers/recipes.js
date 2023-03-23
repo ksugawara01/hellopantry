@@ -2,10 +2,12 @@ const recipesRouter = require('express').Router()
 const Recipe = require('../models/recipe')
 
 // Display all recipes
-recipesRouter.get('/', (request, response) => {
-  Recipe.find({}).then(recipes => {
-    response.json(recipes)
-  })
+recipesRouter.get('/', (request, response, next) => {
+  Recipe.find({})
+    .then(recipes => {
+      response.json(recipes)
+    })
+    .catch(error => next(error))
 })
 
 // Display recipe by id
@@ -17,6 +19,15 @@ recipesRouter.get('/:id', (request, response, next) => {
       } else {
         response.status(404).end()
       }
+    })
+    .catch(error => next(error))
+})
+
+// Display all recipe that contain an ingredient
+recipesRouter.get('/singleingredientsearch/:ingredient', (request, response, next) => {
+  Recipe.find({ recipeIngredient: { $regex: new RegExp(request.params.ingredient, 'i') } })
+    .then(recipes => {
+      response.json(recipes)
     })
     .catch(error => next(error))
 })

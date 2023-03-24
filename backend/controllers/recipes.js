@@ -32,6 +32,24 @@ recipesRouter.get('/singleingredientsearch/:ingredient', (request, response, nex
     .catch(error => next(error))
 })
 
+// Display all recipes that can be made with the pantry ingredients
+recipesRouter.get('/pantrySearch/:pantry', (request, response, next) => {
+  let pantry = request.params.pantry
+  console.log('pantry', pantry)
+  pantry = pantry.split(',')
+  console.log('pantry array?', pantry)
+  // Create array of regular expressions
+  pantry = pantry.map(ingredient => {
+    return new RegExp(ingredient, 'i')
+  })
+  // Finds every recipe where the recipeIngredient array only contains items that match with the pantry regex array
+  Recipe.find({ recipeIngredient: { $not: { $elemMatch: { $nin: pantry } } } })
+    .then(recipes => {
+      response.json(recipes)
+    })
+    .catch(error => next(error))
+})
+
 // Add new recipe
 recipesRouter.post('/', (request, response, next) => {
   const body = request.body
@@ -49,10 +67,8 @@ recipesRouter.post('/', (request, response, next) => {
     thumbnailUrl: body.thumbnailUrl,
     url: body.url
   })
-  console.log('first test')
   recipe.save()
     .then(savedRecipe => {
-      console.log('testing if this is seen')
       response.json(savedRecipe)
     })
     .catch(error => next(error))
@@ -91,5 +107,18 @@ recipesRouter.put('/:id', (request, response, next) => {
     })
     .catch(error => next(error))
 })
+
+// temp
+/*
+recipesRouter.put('/removesaltandpepper/:id', (request, response, next) => {
+
+  const body = request.body
+  Recipe.updateMany(
+    {},
+    { $pull: { recipeIngredient: { $in: ['Kosher Salt', 'Pepper'] } } }
+  )
+    .then(thing => response.json(thing))
+    .catch(error => next(error))
+})*/
 
 module.exports = recipesRouter

@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import SingleIngredientSearch from './SingleIngredientSearch.js'
-//import PantrySearch from './PantrySearch.js'
-//import PantryStaplesSection from './PantryStaplesSection.js'
-//import AdditionalIngredientsSection from './AdditionalIngredientsSection.js'
+import PantrySearch from './PantrySearch.js'
+import PantryStaplesSection from './PantryStaplesSection.js'
+import AdditionalIngredientsSection from './AdditionalIngredientsSection.js'
 
 const StyledHome = styled.div`
   display: flex;
@@ -15,15 +15,15 @@ const StyledHome = styled.div`
 `
 
 export default function Home(props) {
-  const { handleSingleIngredientChange, handleSingleIngredientSearch, appColumnWidth } = props
+  const { handleSingleIngredientChange, handleSingleIngredientSearch, pantry, handleIngredientClick, handlePantrySearch, appColumnWidth } = props
 
   return (
     <StyledHome appColumnWidth={ appColumnWidth }>
       <h1>Home</h1>
       <SingleIngredientSearch handleSingleIngredientChange={ handleSingleIngredientChange } handleSingleIngredientSearch={ handleSingleIngredientSearch } />
-      {/*<PantryStaplesSection />
+      <PantryStaplesSection pantry={ pantry } handleIngredientClick={ handleIngredientClick }/>
       <AdditionalIngredientsSection />
-      <PantrySearch />*/}
+      <PantrySearch handlePantrySearch={ handlePantrySearch }/>
     </StyledHome>
   )
 }

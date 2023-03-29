@@ -14,6 +14,13 @@ const singleIngredientSearch = (ingredient) => {
   return request.then(response => response.data)
 }
 
+// Return all recipes that only contain pantry ingredients
+const pantrySearch = (pantry) => {
+  console.log('axios pantry', pantry)
+  const request = axios.get(`${baseUrl}/pantrySearch/${pantry}`)
+  return request.then(response => response.data)
+}
+
 // Return all recipes
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -37,4 +44,4 @@ const deleteRecipe = (id) => {
   return request.then(response => response.data)
 }
 
-export default { get, singleIngredientSearch, getAll, create, update, deleteRecipe }
+export default { get, singleIngredientSearch, pantrySearch, getAll, create, update, deleteRecipe }

@@ -1,7 +1,6 @@
 import React from 'react'
 
-export default function AdditionalIngredientsSection(props) {
-  const {} = props
+export default function AdditionalIngredientsSection() {
 
   return (
     <>

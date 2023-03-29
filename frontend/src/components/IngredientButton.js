@@ -16,9 +16,13 @@ export default function IngredientButton(props) {
 
   const [selected, setSelected] = useState(false)
 
-  if (pantry.includes(children) && selected !== true) {
+  const lowerCasePantry = pantry.map((ing) => ing.toLowerCase())
+
+  const ingredient = children.toLowerCase()
+
+  if (lowerCasePantry.includes(ingredient) && selected !== true) {
     setSelected(true)
-  } else if (!pantry.includes(children) && selected !== false) {
+  } else if (!lowerCasePantry.includes(ingredient) && selected !== false) {
     setSelected(false)
   }
 

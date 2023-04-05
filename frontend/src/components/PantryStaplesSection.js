@@ -5,6 +5,9 @@ import IngredientButton from './IngredientButton'
 const StyledPantryStaplesSection = styled.div`
   display: flex;
   flex-direction: column;
+  max-height: ${ props => props.isOpen ? '1000px' : '0px' };
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
 `
 const StyledButtonSection = styled.div`
   display: flex;
@@ -12,11 +15,13 @@ const StyledButtonSection = styled.div`
 `
 
 export default function PantryStaplesSection(props) {
-  const { pantry, handleIngredientClick } = props
+  const { pantry, handleIngredientClick, isOpen } = props
+
+  console.log('isOpen', isOpen)
 
   return (
-    <StyledPantryStaplesSection>
-      <h2>Pantry Staples</h2>
+    <StyledPantryStaplesSection isOpen={ isOpen }>
+      <p>Quickly add and remove pantry staples by pressing the buttons.</p>
       <h4>Basics</h4>
       <StyledButtonSection>
         <IngredientButton pantry={ pantry } handleIngredientClick={ handleIngredientClick } >Oil</IngredientButton>
@@ -114,10 +119,6 @@ export default function PantryStaplesSection(props) {
         <IngredientButton pantry={ pantry } handleIngredientClick={ handleIngredientClick } >Concentrated Mushroom Stock</IngredientButton>
         <IngredientButton pantry={ pantry } handleIngredientClick={ handleIngredientClick } >Concentrated Seafood Stock</IngredientButton>
       </StyledButtonSection>
-      <h4>Custom Pantry</h4>
-      <StyledButtonSection>
-      </StyledButtonSection>
-
     </StyledPantryStaplesSection>
   )
 }

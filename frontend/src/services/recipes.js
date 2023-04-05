@@ -16,7 +16,6 @@ const singleIngredientSearch = (ingredient) => {
 
 // Return all recipes that only contain pantry ingredients
 const pantrySearch = (pantry) => {
-  console.log('axios pantry', pantry)
   const request = axios.get(`${baseUrl}/pantrySearch/${pantry}`)
   return request.then(response => response.data)
 }

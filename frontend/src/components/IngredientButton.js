@@ -16,8 +16,8 @@ export default function IngredientButton(props) {
 
   const [selected, setSelected] = useState(false)
 
+  // Convert pantry and ingredient to lowercase to make the includes function case insensitive
   const lowerCasePantry = pantry.map((ing) => ing.toLowerCase())
-
   const ingredient = children.toLowerCase()
 
   if (lowerCasePantry.includes(ingredient) && selected !== true) {

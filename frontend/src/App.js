@@ -41,7 +41,7 @@ const StyledApp = styled.div`
   //margin: 0px;
   //padding: 0px;
   //border: 2px solid red;
-  background-color: lightgray;
+  //background-color: lightgray;
 `
 
 const StyledHeader = styled.div`
@@ -55,6 +55,7 @@ const StyledHeader = styled.div`
 const StyledLogo = styled.img`
   margin-right: 100px;
   height: 100%;
+  max-width: 50%;
 `
 
 const StyledLink = styled(Link)`
@@ -85,19 +86,15 @@ function App() {
     const loggedUserJSON = window.localStorage.getItem('loggedHelloPantryUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      console.log('what is user', user)
       setUser(user)
       userService.setToken(user.token)
     }
   }, [])
 
   useEffect(() => {
-    console.log('user', user)
     if (user !== null) {
-      console.log('getting pantry')
       userService.getPantry()
         .then(pantry => {
-          console.log('pantry', pantry)
           setPantry(pantry)
         })
     } else {
@@ -183,11 +180,39 @@ function App() {
     }
   }
 
+  // Handles adding pantry ingredients through the input bar
+  const handleAddPantryIngredient = (ingredient) => {
+
+    const toTitleCase = (str) => {
+      return str.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+      })
+    }
+
+    ingredient = toTitleCase(ingredient)
+
+    if (!pantry.includes(ingredient)) {
+      const updatedPantry = pantry.concat(ingredient)
+      if (user !== null) {
+        userService.updatePantry(updatedPantry)
+      }
+      setPantry(updatedPantry)
+    }
+  }
+
+  const handleDeletePantryIngredient = (ingredient) => {
+    console.log('ingredient', ingredient)
+    const updatedPantry = pantry.filter(ing => ing !== ingredient)
+    if (user !== null) {
+      userService.updatePantry(updatedPantry)
+    }
+    setPantry(updatedPantry)
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedHelloPantryUser')
     setUser(null)
     userService.setToken(null)
-    //might need to set token???
   }
 
   // Handles changes to input fields
@@ -217,7 +242,7 @@ function App() {
         </div>
       </StyledHeader>
       <Routes>
-        <Route path='/' element={ <Home handleSingleIngredientChange={ handleSingleIngredientChange } handleSingleIngredientSearch={ handleSingleIngredientSearch } pantry={ pantry } handlePantrySearch={ handlePantrySearch } handleIngredientClick={ handleIngredientClick } appColumnWidth={ appColumnWidth }/> } />
+        <Route path='/' element={ <Home handleSingleIngredientChange={ handleSingleIngredientChange } handleSingleIngredientSearch={ handleSingleIngredientSearch } pantry={ pantry } handlePantrySearch={ handlePantrySearch } handleIngredientClick={ handleIngredientClick } handleAddPantryIngredient={ handleAddPantryIngredient } handleDeletePantryIngredient={ handleDeletePantryIngredient } appColumnWidth={ appColumnWidth }/> } />
         <Route path='/login' element={ <Login handleLogin={ handleLogin } handleUsernameChange={ handleUsernameChange } handlePasswordChange={ handlePasswordChange } /> } />
         <Route path='/searchresults' element={ <SearchResults recipes={ recipes } singleIngredient={ singleIngredient } appColumnWidth={ appColumnWidth } /> } />
         <Route path='/signup' element={ <SignUp handleSignUp={ handleSignUp } handleUsernameChange={ handleUsernameChange } handlePasswordChange={ handlePasswordChange } /> } />

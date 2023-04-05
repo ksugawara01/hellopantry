@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledFooter = styled.div`
+const StyledFooter = styled.footer`
   display: flex;
-  border: 2px solid red;
 `
 
 export default function Footer() {
   return(
-    <StyledFooter>Footer</StyledFooter>
+    <StyledFooter>Copyright © 2023 Koudou Sugawara</StyledFooter>
   )
 }
